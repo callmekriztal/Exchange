@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Objective } from '../types';
 import { api } from '../services/api';
 import { ArrowRight, Plus, RefreshCw, TrendingUp } from 'lucide-react';
+import { formatDualCurrency, formatINR } from '../utils/currency';
 
 interface Props {
   onSelectObjective: (id: string) => void;
@@ -97,7 +98,9 @@ export const Dashboard: React.FC<Props> = ({ onSelectObjective }) => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
             <div className="flex items-center gap-3">
               <div>
-                <label className="block text-[11px] text-slate-400 mb-1">Max Budget</label>
+                <label className="block text-[11px] text-slate-400 mb-1">
+                  Max Budget ($ USD {budget && !isNaN(Number(budget)) ? `≈ ${formatINR(Number(budget))}` : ''})
+                </label>
                 <div className="relative w-32">
                   <span className="absolute inset-y-0 left-0 pl-2.5 flex items-center text-slate-400 text-xs">$</span>
                   <input
@@ -124,7 +127,7 @@ export const Dashboard: React.FC<Props> = ({ onSelectObjective }) => {
                   }
                   className="text-[11px] text-slate-400 hover:text-slate-200 bg-slate-800/50 hover:bg-slate-800 px-2 py-1 rounded transition"
                 >
-                  Energy Forecast ($25)
+                  Energy Forecast (₹2,163 / $25)
                 </button>
                 <button
                   type="button"
@@ -137,7 +140,7 @@ export const Dashboard: React.FC<Props> = ({ onSelectObjective }) => {
                   }
                   className="text-[11px] text-slate-400 hover:text-slate-200 bg-slate-800/50 hover:bg-slate-800 px-2 py-1 rounded transition"
                 >
-                  AI Silicon ($30)
+                  AI Silicon (₹2,595 / $30)
                 </button>
               </div>
             </div>
@@ -197,7 +200,7 @@ export const Dashboard: React.FC<Props> = ({ onSelectObjective }) => {
                     {obj.status.replace('_', ' ')}
                   </span>
                   <span className="font-mono text-emerald-400 font-semibold text-xs">
-                    ${Number(obj.max_budget_usd).toFixed(2)}
+                    {formatDualCurrency(Number(obj.max_budget_usd))}
                   </span>
                 </div>
 

@@ -3,6 +3,7 @@ import { Contract } from '../../types';
 import { api } from '../../services/api';
 import { CheckCircle, CreditCard, ShieldCheck, AlertCircle } from 'lucide-react';
 import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
+import { formatDualCurrency } from '../../utils/currency';
 
 interface Props {
   objectiveId: string;
@@ -46,12 +47,12 @@ export const PayPalCheckoutCard: React.FC<Props> = ({ objectiveId, contracts, on
           <h3 className="font-semibold text-white text-sm">PayPal Sandbox Authorization</h3>
         </div>
         <span className="font-mono text-emerald-400 font-bold text-sm">
-          ${totalAmount.toFixed(2)} USD
+          {formatDualCurrency(totalAmount, true)}
         </span>
       </div>
 
       <p className="text-xs text-slate-400">
-        Review negotiated pricing and authorize checkout to lock funds in Escrow.
+        Review negotiated pricing and authorize checkout to lock funds in Escrow. Billed in USD via PayPal for Indian cross-border export settlement.
       </p>
 
       {error && (
@@ -117,9 +118,14 @@ export const PayPalCheckoutCard: React.FC<Props> = ({ objectiveId, contracts, on
           </PayPalScriptProvider>
         )}
 
-        <div className="flex items-center space-x-1.5 text-[11px] text-slate-500 justify-center pt-1">
-          <ShieldCheck className="w-3 h-3 text-emerald-400" />
-          <span>Held in escrow until tasks are accepted</span>
+        <div className="flex flex-col items-center gap-0.5 text-[11px] text-slate-500 justify-center pt-1">
+          <div className="flex items-center space-x-1.5">
+            <ShieldCheck className="w-3 h-3 text-emerald-400" />
+            <span>Held in escrow until tasks are accepted</span>
+          </div>
+          <span className="text-[10px] text-slate-500">
+            PayPal Sandbox processes in USD (1 USD ≈ ₹86.50 INR)
+          </span>
         </div>
       </div>
     </div>

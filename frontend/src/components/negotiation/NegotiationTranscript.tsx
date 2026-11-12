@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Negotiation } from '../../types';
 import { Bot, ChevronDown, ChevronUp, MessageSquare } from 'lucide-react';
+import { formatDualCurrency } from '../../utils/currency';
 
 interface Props {
   negotiation: Negotiation;
@@ -58,7 +59,7 @@ export const NegotiationTranscript: React.FC<Props> = ({ negotiation }) => {
                     {isBuyer ? 'Apex Buyer' : 'Seller Agent'} &middot; R{round.round_number}
                   </span>
                   <span className="font-mono text-emerald-400 font-semibold text-xs">
-                    ${round.proposed_price_usd.toFixed(2)}
+                    {formatDualCurrency(round.proposed_price_usd)}
                   </span>
                 </div>
                 <p className="text-slate-400 text-[11px]">{round.rationale}</p>

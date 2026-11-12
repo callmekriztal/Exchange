@@ -11,6 +11,7 @@ import {
   FileCheck2,
   RefreshCw,
 } from 'lucide-react';
+import { formatDualCurrency } from '../utils/currency';
 
 interface Props {
   objectiveId: string;
@@ -141,7 +142,7 @@ export const ObjectiveDetail: React.FC<Props> = ({ objectiveId, onBack }) => {
             <h2 className="text-lg font-bold text-white tracking-tight">{objective.title}</h2>
           </div>
           <span className="font-mono text-emerald-400 font-semibold text-sm">
-            Budget: ${Number(objective.max_budget_usd).toFixed(2)}
+            Budget: {formatDualCurrency(Number(objective.max_budget_usd))}
           </span>
         </div>
         <p className="text-slate-400 text-xs leading-relaxed">{objective.description}</p>
@@ -218,10 +219,10 @@ export const ObjectiveDetail: React.FC<Props> = ({ objectiveId, onBack }) => {
 
                   <div className="flex items-center space-x-3 text-xs self-start sm:self-auto shrink-0">
                     <span className="text-slate-500 text-[11px]">
-                      Allocated: <span className="font-mono text-slate-300">${Number(st.allocated_budget_usd).toFixed(2)}</span>
+                      Allocated: <span className="font-mono text-slate-300">{formatDualCurrency(Number(st.allocated_budget_usd))}</span>
                     </span>
                     <span className="font-mono text-emerald-400 font-semibold text-xs">
-                      {st.agreed_price_usd ? `$${Number(st.agreed_price_usd).toFixed(2)}` : 'Negotiating'}
+                      {st.agreed_price_usd ? formatDualCurrency(Number(st.agreed_price_usd)) : 'Negotiating'}
                     </span>
                   </div>
                 </div>

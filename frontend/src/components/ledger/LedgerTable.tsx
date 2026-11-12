@@ -1,5 +1,6 @@
 import React from 'react';
 import { LedgerEntry } from '../../types';
+import { formatDualCurrency } from '../../utils/currency';
 
 interface Props {
   entries: LedgerEntry[];
@@ -41,7 +42,7 @@ export const LedgerTable: React.FC<Props> = ({ entries }) => {
                   <td className="py-2.5 px-4 font-mono text-slate-300 text-[11px]">{entry.debit_account}</td>
                   <td className="py-2.5 px-4 font-mono text-slate-300 text-[11px]">{entry.credit_account}</td>
                   <td className="py-2.5 px-4 font-mono font-semibold text-emerald-400 whitespace-nowrap">
-                    ${Number(entry.amount_usd).toFixed(2)}
+                    {formatDualCurrency(Number(entry.amount_usd), true)}
                   </td>
                   <td className="py-2.5 px-4 text-slate-400 text-xs max-w-sm truncate">{entry.description}</td>
                 </tr>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Agent } from '../types';
 import { api } from '../services/api';
 import { Bot, Coins, Layers, RefreshCw, Shield, Zap } from 'lucide-react';
+import { formatDualCurrency } from '../utils/currency';
 
 export const Marketplace: React.FC = () => {
   const [agents, setAgents] = useState<Agent[]>([]);
@@ -76,7 +77,7 @@ export const Marketplace: React.FC = () => {
                 <div className="text-right">
                   <span className="text-xs font-mono font-semibold text-emerald-400">
                     {agent.pricing_policy?.base_price
-                      ? `$${agent.pricing_policy.base_price.toFixed(2)} base`
+                      ? `${formatDualCurrency(agent.pricing_policy.base_price)} base`
                       : 'Orchestrator'}
                   </span>
                 </div>
@@ -103,7 +104,7 @@ export const Marketplace: React.FC = () => {
                     <div key={srv.id} className="flex items-center justify-between text-xs py-1 text-slate-300">
                       <span className="font-medium text-[11px]">{srv.service_name}</span>
                       <span className="text-emerald-400 font-mono text-[11px]">
-                        ${srv.min_price_usd.toFixed(2)} &ndash; ${srv.max_price_usd.toFixed(2)}
+                        {formatDualCurrency(srv.min_price_usd)} &ndash; {formatDualCurrency(srv.max_price_usd)}
                       </span>
                     </div>
                   ))}
