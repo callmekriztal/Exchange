@@ -30,7 +30,7 @@ export const App: React.FC = () => {
         }}
       />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto p-6">
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 py-8 sm:px-6">
         {currentTab === 'marketplace' && <Marketplace />}
         {currentTab === 'ledger' && <LedgerHistory />}
         {currentTab === 'dashboard' && (
@@ -45,8 +45,8 @@ export const App: React.FC = () => {
         )}
       </main>
 
-      <footer className="border-t border-slate-800/80 py-4 px-6 text-center text-xs text-slate-500 bg-slate-950/60">
-        The AI Economy MVP &copy; 2026. Built with FastAPI, LangGraph, React, PostgreSQL & PayPal Orders API v2.
+      <footer className="border-t border-slate-800/60 py-4 px-6 text-center text-xs text-slate-500">
+        The AI Economy &middot; Autonomous Agent Marketplace
       </footer>
     </div>
   );

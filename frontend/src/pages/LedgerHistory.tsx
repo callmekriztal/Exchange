@@ -38,58 +38,55 @@ export const LedgerHistory: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+      <div className="flex items-center justify-between border-b border-slate-800 pb-3">
         <div>
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <BookOpen className="w-5 h-5 text-amber-400" />
-            <span>Cryptographic Double-Entry Ledger</span>
+          <h2 className="text-lg font-bold text-white flex items-center gap-2">
+            <BookOpen className="w-4 h-4 text-amber-400" />
+            <span>Accounting Ledger ({entries.length} entries)</span>
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
-            Internal financial source of truth distinguishing PayPal fiat movement from autonomous agent micro-credits.
+          <p className="text-xs text-slate-400 mt-0.5">
+            Double-entry financial journal tracking escrow locks and agent settlements.
           </p>
         </div>
         <button
           onClick={loadEntries}
-          className="text-xs text-slate-400 hover:text-white flex items-center gap-1 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 transition"
+          className="text-xs text-slate-400 hover:text-slate-200 flex items-center gap-1 transition"
         >
-          <RefreshCw className="w-3.5 h-3.5" />
-          <span>Refresh Ledger</span>
+          <RefreshCw className="w-3 h-3" />
+          <span>Refresh</span>
         </button>
       </div>
 
       {/* Account Metric Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-lg space-y-1">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="bg-slate-900/50 border border-slate-800/80 rounded-xl p-4 space-y-1">
           <div className="flex items-center justify-between text-slate-400 text-xs">
-            <span>Cumulative Escrow Deposits</span>
-            <Lock className="w-4 h-4 text-blue-400" />
+            <span>Escrow Deposits</span>
+            <Lock className="w-3.5 h-3.5 text-blue-400" />
           </div>
-          <p className="text-2xl font-bold font-mono text-blue-400">${escrowLocked.toFixed(2)} USD</p>
-          <span className="text-[10px] text-slate-500 font-mono">Account: ESCROW_HOLD</span>
+          <p className="text-xl font-bold font-mono text-white">${escrowLocked.toFixed(2)}</p>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-lg space-y-1">
+        <div className="bg-slate-900/50 border border-slate-800/80 rounded-xl p-4 space-y-1">
           <div className="flex items-center justify-between text-slate-400 text-xs">
-            <span>Total Settled Seller Earnings</span>
-            <DollarSign className="w-4 h-4 text-emerald-400" />
+            <span>Seller Settlements</span>
+            <DollarSign className="w-3.5 h-3.5 text-emerald-400" />
           </div>
-          <p className="text-2xl font-bold font-mono text-emerald-400">${sellerSettled.toFixed(2)} USD</p>
-          <span className="text-[10px] text-slate-500 font-mono">Account: SELLER_AGENT_BALANCE</span>
+          <p className="text-xl font-bold font-mono text-white">${sellerSettled.toFixed(2)}</p>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-lg space-y-1">
+        <div className="bg-slate-900/50 border border-slate-800/80 rounded-xl p-4 space-y-1">
           <div className="flex items-center justify-between text-slate-400 text-xs">
-            <span>Marketplace Platform Fees</span>
-            <ShieldCheck className="w-4 h-4 text-purple-400" />
+            <span>Platform Fees (5%)</span>
+            <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />
           </div>
-          <p className="text-2xl font-bold font-mono text-purple-400">${platformFees.toFixed(2)} USD</p>
-          <span className="text-[10px] text-slate-500 font-mono">Account: PLATFORM_FEE_REVENUE (5%)</span>
+          <p className="text-xl font-bold font-mono text-white">${platformFees.toFixed(2)}</p>
         </div>
       </div>
 
       {/* Ledger Table */}
       {loading ? (
-        <div className="p-16 text-center text-slate-500 text-xs">Loading double-entry ledger...</div>
+        <div className="p-12 text-center text-slate-500 text-xs">Loading ledger...</div>
       ) : (
         <LedgerTable entries={entries} />
       )}

@@ -24,107 +24,89 @@ export const Marketplace: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+      <div className="flex items-center justify-between border-b border-slate-800 pb-3">
         <div>
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <Layers className="w-5 h-5 text-cyan-400" />
-            <span>Agent Registry & Service Catalog</span>
+          <h2 className="text-lg font-bold text-white flex items-center gap-2">
+            <Layers className="w-4 h-4 text-emerald-400" />
+            <span>Agent Registry ({agents.length})</span>
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
-            Autonomous economic actors registered in the marketplace with distinct pricing policies and toolchains.
+          <p className="text-xs text-slate-400 mt-0.5">
+            Registered autonomous agents and their specialized service toolchains.
           </p>
         </div>
         <button
           onClick={loadAgents}
-          className="text-xs text-slate-400 hover:text-white flex items-center gap-1 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 transition"
+          className="text-xs text-slate-400 hover:text-slate-200 flex items-center gap-1 transition"
         >
-          <RefreshCw className="w-3.5 h-3.5" />
-          <span>Refresh Catalog</span>
+          <RefreshCw className="w-3 h-3" />
+          <span>Refresh</span>
         </button>
       </div>
 
       {loading ? (
-        <div className="p-16 text-center text-slate-500 text-xs">Loading Agent Catalog...</div>
+        <div className="p-12 text-center text-slate-500 text-xs">Loading agents...</div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {agents.map((agent) => (
             <div
               key={agent.id}
-              className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl space-y-4"
+              className="bg-slate-900/50 border border-slate-800/80 rounded-xl p-5 space-y-3.5"
             >
-              <div className="flex items-start justify-between">
-                <div className="flex items-center space-x-3">
-                  <div
-                    className={`p-2.5 rounded-xl border ${
-                      agent.agent_type === 'buyer'
-                        ? 'bg-emerald-950/80 border-emerald-800 text-emerald-400'
-                        : agent.agent_type === 'research'
-                        ? 'bg-cyan-950/80 border-cyan-800 text-cyan-400'
-                        : agent.agent_type === 'analysis'
-                        ? 'bg-amber-950/80 border-amber-800 text-amber-400'
-                        : 'bg-purple-950/80 border-purple-800 text-purple-400'
-                    }`}
-                  >
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center space-x-2.5">
+                  <div className="p-2 rounded-lg bg-slate-800 text-slate-300 border border-slate-700/60">
                     {agent.agent_type === 'buyer' ? (
-                      <Bot className="w-6 h-6" />
+                      <Bot className="w-4 h-4 text-emerald-400" />
                     ) : agent.agent_type === 'research' ? (
-                      <Zap className="w-6 h-6" />
+                      <Zap className="w-4 h-4 text-cyan-400" />
                     ) : agent.agent_type === 'analysis' ? (
-                      <Coins className="w-6 h-6" />
+                      <Coins className="w-4 h-4 text-amber-400" />
                     ) : (
-                      <Shield className="w-6 h-6" />
+                      <Shield className="w-4 h-4 text-purple-400" />
                     )}
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-white">{agent.name}</h3>
-                    <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">
-                      Type: {agent.agent_type}
+                    <h3 className="text-sm font-semibold text-white">{agent.name}</h3>
+                    <span className="text-[10px] text-slate-400 uppercase font-mono">
+                      {agent.agent_type} agent
                     </span>
                   </div>
                 </div>
 
-                <div className="bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-right">
-                  <span className="text-[10px] text-slate-500 uppercase block font-mono">Pricing Model</span>
-                  <span className="text-xs font-mono font-bold text-emerald-400">
+                <div className="text-right">
+                  <span className="text-xs font-mono font-semibold text-emerald-400">
                     {agent.pricing_policy?.base_price
-                      ? `$${agent.pricing_policy.base_price.toFixed(2)} Base`
+                      ? `$${agent.pricing_policy.base_price.toFixed(2)} base`
                       : 'Orchestrator'}
                   </span>
                 </div>
               </div>
 
-              <p className="text-xs text-slate-300 leading-relaxed">{agent.description}</p>
+              <p className="text-xs text-slate-400 leading-relaxed">{agent.description}</p>
 
-              <div>
-                <h5 className="text-[10px] uppercase font-mono text-slate-500 font-semibold mb-2">Capabilities</h5>
-                <div className="flex flex-wrap gap-1.5">
-                  {agent.capabilities?.map((cap) => (
+              {agent.capabilities?.length > 0 && (
+                <div className="flex flex-wrap gap-1">
+                  {agent.capabilities.map((cap) => (
                     <span
                       key={cap}
-                      className="text-[10px] font-mono bg-slate-800/80 text-slate-300 border border-slate-700/60 px-2 py-0.5 rounded"
+                      className="text-[10px] bg-slate-800/60 text-slate-400 px-2 py-0.5 rounded"
                     >
                       {cap}
                     </span>
                   ))}
                 </div>
-              </div>
+              )}
 
               {agent.services?.length > 0 && (
-                <div className="border-t border-slate-800/80 pt-3">
-                  <h5 className="text-[10px] uppercase font-mono text-slate-500 font-semibold mb-2">Published Services</h5>
-                  <div className="space-y-2">
-                    {agent.services.map((srv) => (
-                      <div key={srv.id} className="bg-slate-950 p-3 rounded-lg border border-slate-800/80 text-xs space-y-1">
-                        <div className="flex justify-between font-semibold text-white">
-                          <span>{srv.service_name}</span>
-                          <span className="text-emerald-400 font-mono">
-                            ${srv.min_price_usd.toFixed(2)} - ${srv.max_price_usd.toFixed(2)}
-                          </span>
-                        </div>
-                        <p className="text-[11px] text-slate-400">{srv.description}</p>
-                      </div>
-                    ))}
-                  </div>
+                <div className="border-t border-slate-800/60 pt-2.5 space-y-1.5">
+                  {agent.services.map((srv) => (
+                    <div key={srv.id} className="flex items-center justify-between text-xs py-1 text-slate-300">
+                      <span className="font-medium text-[11px]">{srv.service_name}</span>
+                      <span className="text-emerald-400 font-mono text-[11px]">
+                        ${srv.min_price_usd.toFixed(2)} &ndash; ${srv.max_price_usd.toFixed(2)}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
